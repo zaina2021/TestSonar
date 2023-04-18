@@ -41,4 +41,26 @@ public class Calculator {
 		return  integers;
 	}
 
+	public Double celsiusToFahrenheit(double d) {
+		// TODO Auto-generated method stub
+		return (1.8 * d + 32.0);
+	}
+
+	public Double litresToGallons(double d) {
+		// TODO Auto-generated method stub
+		return (double)Math.round(d * 0.264172 * 1000d) / 1000d ;
+		
+	}
+
+	public Double radiusToAreaOfCircle(double d) {
+		// TODO Auto-generated method stub
+		 return Math.PI * d * Math.pow(d, 2);
+	}
+
+	public Double fahrenheitToCelsius(double d) {
+		// TODO Auto-generated method stub
+	
+		  return (d - 32) * 5 / 9;
+	}
+
 }

@@ -15,14 +15,22 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-
-class CalculatorTest {
+@TestInstance(Lifecycle.PER_CLASS)
+@Tag("ConversionTests")
+@DisplayName("Reussir à converstir entre différents unités  ")
+class CalculatorTest
+{
 	private Calculator 	calculatorTest ;
 	private static  Instant startedAt;
 
@@ -32,6 +40,7 @@ class CalculatorTest {
 		System.out.println("Appel avant chaque test");
 
 	}
+	
 
 	@AfterEach
 	public void undefCalculator() {
@@ -39,7 +48,8 @@ class CalculatorTest {
 		calculatorTest = null;
 
 	}
-
+	
+    
 	@BeforeAll()
 	public static  void initStartingTime() {
 		System.out.println("Appel avant tous les tests");
@@ -94,6 +104,7 @@ class CalculatorTest {
 	}
 	
 	@Test
+	@Tag("QuatresOperations")// ce test fait parti des tests des autres opérations de base 
 	void addTwoPositiveNumbers() {
 		//ARRANGE (GIVEN)
 		int a = 2;
@@ -111,6 +122,7 @@ class CalculatorTest {
 	}
 
 	@Test
+	@Tag("QuatresOperations")// ce test fait parti des tests des autres opérations de base
 	void multiplytwopositiveNumbers() {
 
 		//ARRANGE (GIVEN)
@@ -165,32 +177,45 @@ class CalculatorTest {
 		// THEN
 		assertThat(actualDigits).containsExactlyInAnyOrder( 0);
 	}
+	
+@Nested
+@Tag("TemeraturesTests")
+@DisplayName("Reussir à convertir des températures")
+class TemperaturesTests{
+	@Test
+	@DisplayName("Soit T° à 0°C, lorsque l'on convertit en °F, alors on obtient 32°F" )
+	public void celciusTofahrenheit_returnsFahrenheitTemperature_whenCelciusIsZero() {
+		Double actualCelcius = calculatorTest.celsiusToFahrenheit(0.0);
+		assertThat(actualCelcius).isCloseTo(32.0, withinPercentage(0.01));
+	}
+	
+	@Test
+	@DisplayName("Soit T° à 32°F, lorsque l'on convertit en °C, alors on obtient 0°C" )
+	public void fahrenheitToCelcius_returnsZeroCelciusTemperature_whenThirtyTwo() {
+		Double actualCelcius = calculatorTest.fahrenheitToCelsius(32.0);
+		assertThat(actualCelcius).isCloseTo(0.0, withinPercentage(0.01));
+	}
+	
+}
+
+@Test
+@DisplayName("Soit un volume de 3.78541 litres, en, gallons on obtient 1 gallon")
+public void litresToGallons_returnsOneGallon_whenConvertingTheEquivalentLitres() {
+	Double actualLitres = calculatorTest.litresToGallons(3.78541);
+	assertThat(actualLitres).isCloseTo(1.0, withinPercentage(0.01));
+}
+
+@Test
+@DisplayName("L'aire d'un disque de rayon 1 doit valoir PI.")
+public void radiusToAreaOfCircle_returnsPi_whenWeHaveARadiusOfOne() {
+	Double actualArea = calculatorTest.radiusToAreaOfCircle(1.0);
+	assertThat(actualArea).isCloseTo(3.141592653589793, withinPercentage(0.01));
+	
+	
+}
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//	void test() {
-	//		fail("Not yet implemented");
-	//	}
 
 }
